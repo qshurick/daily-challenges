@@ -1,0 +1,6 @@
+services:
+  generations:
+    image: node:current-alpine
+    volumes:
+      - .:/app
+    working_dir: /app
