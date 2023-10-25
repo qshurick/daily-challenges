@@ -1,16 +1,25 @@
+const CURRENT_GENERATION_OFFSET = 0;
+const GRAND_GENERATION_OFFSET = 1;
+const GREAT_GENERATION_OFFSET = 2;
+
 const dictionary = {
 	"m": ["son", "father"],
 	"f": ["daughter", "mother"],
 };
 
 function generation(relativeGeneration, gender) {
-	if (relativeGeneration === 0) {
+	if (relativeGeneration === CURRENT_GENERATION_OFFSET) {
 		return 'me!';
 	}
 
-	const prefix = relativeGeneration < -1 || relativeGeneration > 1 ? 'grand' : '';
-	const name = prefix + dictionary[gender][+(relativeGeneration < 0)];
-	const greatness = Array(Math.max(0, Math.abs(relativeGeneration) - 2)).fill('great ').join('');
+    const generationOffset = Math.abs(relativeGeneration);
+    const isPastGeneration = relativeGeneration < 0;
+
+	const name = prefix + dictionary[gender][+isPastGeneration];
+	const prefix = generationOffset > GRAND_GENERATION_OFFSET ? 'grand' : '';
+	const greatness = Array(Math.max(0, generationOffset - GREAT_GENERATION_OFFSET))
+        .fill('great ')
+        .join('');
 	
 	return greatness + name;
 }
