@@ -1,0 +1,6 @@
+services:
+    app:
+        image: php:8-cli-alpine
+        working_dir: /app
+        volumes:
+            - .:/app
