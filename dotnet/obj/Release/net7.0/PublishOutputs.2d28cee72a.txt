@@ -1,0 +1,5 @@
+/app/out/dotnet
+/app/out/dotnet.dll
+/app/out/dotnet.deps.json
+/app/out/dotnet.runtimeconfig.json
+/app/out/dotnet.pdb
