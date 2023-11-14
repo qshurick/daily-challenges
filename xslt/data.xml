@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<test-data-provider>
+    <data-set>
+        <input><![CDATA[aabbccc]]></input>
+        <swap>
+            <character><![CDATA[a]]></character>
+            <character><![CDATA[b]]></character>
+        </swap>
+    </data-set>
+    <data-set>
+        <input><![CDATA[random w#rds writt&n h&r&]]></input>
+        <swap>
+            <character><![CDATA[#]]></character>
+            <character><![CDATA[&]]></character>
+        </swap>
+    </data-set>
+    <data-set>
+        <input><![CDATA[128 895 556 788 999]]></input>
+        <swap>
+            <character><![CDATA[8]]></character>
+            <character><![CDATA[9]]></character>
+        </swap>
+    </data-set>
+</test-data-provider>
