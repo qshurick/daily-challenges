@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Create m x n matrix: css</title>
+        <meta name="description" content="Did you know that HTML+CSS is Turing comlete?">
+        <style type="text/css">
+            :root {
+                --cell-size: 20px;
+                --max-cells: 5;
+                --cell-gap: 5px;
+            }
+
+            .wrapper {
+                display: grid;
+                grid-template-columns: repeat(calc(1 + var(--max-cells)), var(--cell-size));
+                grid-template-rows: repeat(calc(1 + var(--max-cells)), var(--cell-size));
+                gap: var(--cell-gap);
+            }
+
+            input {
+                width: var(--cell-size);
+                height: var(--cell-size);
+                padding: 0;
+                pointer-events: none;
+                -webkit-appearance: none;
+                background: lightgray;
+            }
+
+            input:first-child {
+                grid-column-start: 2;
+            }
+
+            /** enable input checkboxes */
+            input:nth-child(6n), input:nth-child(-n+6) {
+                pointer-events: auto;
+                background: #009900 !important;
+            }
+
+            /** highlight checkbox after selection */
+            input:nth-child(6n):checked, input:nth-child(-n+6):checked {
+                background: #006600 !important;
+            }
+
+            /** highlight cell when either column or row is selected */
+            input:nth-child(6n):checked + *,
+            input:nth-child(6n):checked + *+*,
+            input:nth-child(6n):checked + *+*+*,
+            input:nth-child(6n):checked + *+*+*+*,
+            input:nth-child(6n):checked + *+*+*+*+*,
+
+            input:nth-child(-n+6):checked + *+*+*+*+*+*,
+            input:nth-child(-n+6):checked + *+*+*+*+*+* + *+*+*+*+*+*,
+            input:nth-child(-n+6):checked + *+*+*+*+*+* + *+*+*+*+*+* + *+*+*+*+*+*,
+            input:nth-child(-n+6):checked + *+*+*+*+*+* + *+*+*+*+*+* + *+*+*+*+*+* + *+*+*+*+*+*,
+            input:nth-child(-n+6):checked + *+*+*+*+*+* + *+*+*+*+*+* + *+*+*+*+*+* + *+*+*+*+*+* + *+*+*+*+*+*
+            {
+                background: darkgray;
+            }
+
+            /**
+             * highlight cell when both column and row are selected
+             * for i 1..n
+             *   for j 0..(n-1)
+             *     if checkbox [i] and [j*(n+1) + n + 1] are selected
+             *       highlight [j*(n+1) + n + 1 + i]
+            */
+            input:nth-child(1):checked + *+*+*+*+*:checked + *,
+            input:nth-child(2):checked + *+*+*+*:checked + *+*,
+            input:nth-child(3):checked + *+*+*:checked + *+*+*,
+            input:nth-child(4):checked + *+*:checked + *+*+*+*,
+            input:nth-child(5):checked + *:checked + *+*+*+*+*,
+
+            input:nth-child(1):checked + *+*+*+*+* + *+*+*+*+*+*:checked + *,
+            input:nth-child(2):checked + *+*+*+*   + *+*+*+*+*+*:checked + *+*,
+            input:nth-child(3):checked + *+*+*     + *+*+*+*+*+*:checked + *+*+*,
+            input:nth-child(4):checked + *+*       + *+*+*+*+*+*:checked + *+*+*+*,
+            input:nth-child(5):checked + *         + *+*+*+*+*+*:checked + *+*+*+*+*,
+
+            input:nth-child(1):checked + *+*+*+*+* + *+*+*+*+*+* + *+*+*+*+*+*:checked + *,
+            input:nth-child(2):checked + *+*+*+*   + *+*+*+*+*+* + *+*+*+*+*+*:checked + *+*,
+            input:nth-child(3):checked + *+*+*     + *+*+*+*+*+* + *+*+*+*+*+*:checked + *+*+*,
+            input:nth-child(4):checked + *+*       + *+*+*+*+*+* + *+*+*+*+*+*:checked + *+*+*+*,
+            input:nth-child(5):checked + *         + *+*+*+*+*+* + *+*+*+*+*+*:checked + *+*+*+*+*,
+
+            input:nth-child(1):checked + *+*+*+*+* + *+*+*+*+*+* + *+*+*+*+*+* + *+*+*+*+*+*:checked + *,
+            input:nth-child(2):checked + *+*+*+*   + *+*+*+*+*+* + *+*+*+*+*+* + *+*+*+*+*+*:checked + *+*,
+            input:nth-child(3):checked + *+*+*     + *+*+*+*+*+* + *+*+*+*+*+* + *+*+*+*+*+*:checked + *+*+*,
+            input:nth-child(4):checked + *+*       + *+*+*+*+*+* + *+*+*+*+*+* + *+*+*+*+*+*:checked + *+*+*+*,
+            input:nth-child(5):checked + *         + *+*+*+*+*+* + *+*+*+*+*+* + *+*+*+*+*+*:checked + *+*+*+*+*,
+
+            input:nth-child(1):checked + *+*+*+*+* + *+*+*+*+*+* + *+*+*+*+*+* + *+*+*+*+*+* + *+*+*+*+*+*:checked + *,
+            input:nth-child(2):checked + *+*+*+*   + *+*+*+*+*+* + *+*+*+*+*+* + *+*+*+*+*+* + *+*+*+*+*+*:checked + *+*,
+            input:nth-child(3):checked + *+*+*     + *+*+*+*+*+* + *+*+*+*+*+* + *+*+*+*+*+* + *+*+*+*+*+*:checked + *+*+*,
+            input:nth-child(4):checked + *+*       + *+*+*+*+*+* + *+*+*+*+*+* + *+*+*+*+*+* + *+*+*+*+*+*:checked + *+*+*+*,
+            input:nth-child(5):checked + *         + *+*+*+*+*+* + *+*+*+*+*+* + *+*+*+*+*+* + *+*+*+*+*+*:checked + *+*+*+*+*
+            {
+                background: #006699;
+            }
+        </style>
+    </head>
+    <body>
+        <input type="checkbox" />
+        <input type="checkbox" />
+        <input type="checkbox" />
+        <input type="checkbox" />
+        <input type="checkbox" />
+        <input type="checkbox" />
+        <input type="checkbox" />
+        <input type="checkbox" />
+        <input type="checkbox" />
+        <input type="checkbox" />
+        <input type="checkbox" />
+        <input type="checkbox" />
+        <input type="checkbox" />
+        <input type="checkbox" />
+        <input type="checkbox" />
+        <input type="checkbox" />
+        <input type="checkbox" />
+        <input type="checkbox" />
+        <input type="checkbox" />
+        <input type="checkbox" />
+        <input type="checkbox" />
+        <input type="checkbox" />
+        <input type="checkbox" />
+        <input type="checkbox" />
+        <input type="checkbox" />
+        <input type="checkbox" />
+        <input type="checkbox" />
+        <input type="checkbox" />
+        <input type="checkbox" />
+        <input type="checkbox" />
+        <input type="checkbox" />
+        <input type="checkbox" />
+        <input type="checkbox" />
+        <input type="checkbox" />
+        <input type="checkbox" />
+    </body>
+</html>
